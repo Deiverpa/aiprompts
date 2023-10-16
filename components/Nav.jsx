@@ -3,10 +3,10 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
-import { signIn, signOut, useSession, getProviders } from "next-auth";
+import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 
 const Nav = () => {
-  const isUserLoggedIn = true;
+  const { data: session } = useSession();
 
   const [providers, setProviders] = useState(null);
   const [toggleDropDown, setToggleDropDown] = useState(false);
@@ -29,11 +29,12 @@ const Nav = () => {
   }, []);
 
   useEffect(() => {
-    const setProviders = async () => {
+    const setUpProviders = async () => {
       const response = await getProviders();
 
-      setProviders();
+      setProviders(response);
     };
+    setUpProviders();
   }, []);
 
   return (
@@ -52,7 +53,7 @@ const Nav = () => {
       {/* Desktop navegation */}
       <div>
         <div className="sm:flex hidden">
-          {isUserLoggedIn ? (
+          {session?.user ? (
             <div className="flex gap-3 md:gap-5">
               <Link href="/create-prompt" className="black_btn">
                 Create Post
@@ -62,7 +63,7 @@ const Nav = () => {
               </button>
               <Link href="/profile">
                 <Image
-                  src="/assets/images/logo.svg"
+                  src={session?.user.image}
                   width={37}
                   height={37}
                   className="rounded-full"
@@ -79,7 +80,9 @@ const Nav = () => {
                     key={provider.name}
                     onClick={() => signIn(provider.id)}
                     className="outline_btn"
-                  ></button>
+                  >
+                    Sign in
+                  </button>
                 ))}
             </>
           )}
@@ -87,10 +90,10 @@ const Nav = () => {
       </div>
       {/* mobile navegation */}
       <div className="sm:hidden flex relative" ref={dropdownRef}>
-        {isUserLoggedIn ? (
+        {session?.user ? (
           <div>
             <Image
-              src="/assets/images/logo.svg"
+              src={session?.user.image}
               width={37}
               height={37}
               className="rounded-full"
@@ -115,6 +118,16 @@ const Nav = () => {
                 >
                   Create Prompt
                 </Link>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setToggleDropDown(false);
+                    signOut();
+                  }}
+                  className="mt-5 w-full black_btn"
+                >
+                  Sign Out
+                </button>
               </div>
             )}
           </div>
