@@ -1,5 +1,6 @@
-This is a [Next.js](https://nextjs.org/) Full Stack project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This is a [Next.js](https://nextjs.org/) Full Stack project following the JSmastery route in the following: https://youtu.be/wm5gMKuwSYk bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 Using MongoDB, Google Auth and more.
+
 ## Getting Started
 
 First, run the development server:
@@ -8,10 +9,6 @@ First, run the development server:
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
