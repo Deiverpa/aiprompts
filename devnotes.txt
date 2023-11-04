@@ -1,2 +1,3 @@
 *El app corre inicialmente en el archivo Layout donde se renderizan principalmente los navbars y footers
 *En Layout está el HTML
+*Revisar GitIgnore
